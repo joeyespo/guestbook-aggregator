@@ -10,7 +10,7 @@
 
     <div class="well clearfix">
       <div class="entry clearfix">
-        <img src="{{ entry.photo }}" width="128" height="128" title="{{ entry.name }}" />
+        <img src="{{ entry.photo }}" width="64" height="64" title="{{ entry.name }}" />
         <p class="{{ 'large' if entry.message|count < 30 }}">
           {{ entry.message|safe }}
         </p>
