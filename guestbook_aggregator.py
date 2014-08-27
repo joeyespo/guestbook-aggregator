@@ -2,7 +2,7 @@
 Guestbook Aggregator
 
 Shows entries from all guestbooks using their APIs. Either set
-the ENV variable GUESTBOOK_API_URLS or create a settings_local.py
+the ENV variable GUESTBOOK_API_HOSTS or create a settings_local.py
 to set the list of guestbooks.
 
 API Endpoints this project accesses and expects:
@@ -38,7 +38,8 @@ app = Flask(__name__)
 app.config.from_pyfile('settings.py')
 app.config.from_pyfile('settings_local.py', silent=True)
 # Constants
-API_URLS = app.config['GUESTBOOK_API_URLS'].split(';')
+API_SCHEME = app.config['GUESTBOOK_API_SCHEME']
+API_HOSTS = app.config['GUESTBOOK_API_HOSTS'].split(';')
 
 
 # Views
@@ -53,18 +54,18 @@ def index():
     return render_template('index.html', entries=entries, error=error)
 
 
-@app.route('/<entry>')
-def view_entry(id):
-    entry = load_entry(id)
+@app.route('/<guestbook_host>/<entry_id>')
+def view_entry(guestbook_host, entry_id):
+    entry = load_entry(guestbook_host, entry_id)
     return render_template('entries/view.html', entry=entry)
 
 
 @app.route('/new', methods=['GET', 'POST'])
 def new_entry():
     if (request.method == 'GET'):
-        return render_template('entries/new.html', urls=API_URLS)
+        return render_template('entries/new.html', hosts=API_HOSTS)
 
-    url = urljoin(request.form['url'], '/entries')
+    url = urljoin(API_SCHEME + request.form['url'], '/entries')
     payload = {
         'name': request.form['name'],
         'email': request.form['email'],
@@ -78,8 +79,8 @@ def new_entry():
 
 
 # Helpers
-def load_entry(guestbook_url, id):
-    url = urljoin(guestbook_url, '/entry/' + str(id))
+def load_entry(guestbook_host, entry_id):
+    url = urljoin(API_SCHEME + guestbook_host, '/entry/' + str(entry_id))
 
     # Get entry from guestbook
     try:
@@ -95,15 +96,25 @@ def load_entry(guestbook_url, id):
 
 
 def aggregate_entries():
-    urls = map(lambda url: urljoin(url, '/entries'), API_URLS)
+    def add_host(entry, host):
+        entry['host'] = host
+        return entry
 
     # Get all entries from all guestbooks
     entries = []
-    for url in urls:
+    for host in API_HOSTS:
         try:
+            # Request entries from the API
+            url = urljoin(API_SCHEME + host, '/entries')
             r = requests.get(url)
+            # Get entries
             data = r.json()
-            entries += data['entries']
+            guestbooke_entries = data['entries']
+            # Add the source URL to the entry data
+            guestbooke_entries = map(lambda e: add_host(e, host),
+                guestbooke_entries)
+            # Include the entries in the list
+            entries += guestbooke_entries
         except requests.exceptions.ConnectionError as ex:
             # Show an error as an entry
             entries.append({
