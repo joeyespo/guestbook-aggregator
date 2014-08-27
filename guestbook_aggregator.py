@@ -85,6 +85,12 @@ def load_entry(guestbook_host, entry_id):
     # Get entry from guestbook
     try:
         r = requests.get(url)
+        if not r.ok:
+            return {
+                'name': 'Error',
+                'photo': url_for('static', filename='error.png'),
+                'message': str(r.text),
+            }
         return r.json()
     except requests.exceptions.ConnectionError as ex:
         # Show an error as an entry

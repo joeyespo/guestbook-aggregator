@@ -3,23 +3,27 @@
 
 {% block page %}
   <div class="container">
-    <div class="header clearfix">
-      <h1 class="pull-left">Aggregated Entries</h1>
-      <a href="#TODO" class="btn btn-lg btn-success pull-right">New Entry</a>
-    </div>
+    <header class="clearfix">
+      <h1 class="pull-left">Entry {{ entry.id }}</h1>
+      <a href="{{ url_for('index') }}" class="btn btn-default pull-right">Back</a>
+    </header>
 
-    {% for entry in entries %}
-      <div class="well clearfix">
-        <div class="entry-photo">
-          <img src="{{ entry.photo }}" />
-        </div>
-        <div class="entry-message">
-          {{ entry.message }}
-        </div>
-        <div class="entry-date">
-          {{ entry.timestamp.strftime('%b %d %Y %I:%M%p') }}
-        </div>
+    <div class="well clearfix">
+      <div class="entry clearfix">
+        <img src="{{ entry.photo }}" width="128" height="128" title="{{ entry.name }}" />
+        <p class="{{ 'large' if entry.message|count < 30 }}">
+          {{ entry.message|safe }}
+        </p>
       </div>
-    {% endfor %}
+      {% if entry.timestamp %}
+        <div class="entry-date">
+          {% if entry.id %}
+            <a href="{{ url_for('view_entry', guestbook_host=entry.host, entry_id=entry.id) }}">{{ entry.timestamp }}</a>
+          {% else %}
+            {{ entry.timestamp }}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}

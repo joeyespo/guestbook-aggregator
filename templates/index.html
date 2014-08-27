@@ -24,7 +24,11 @@
         </div>
         {% if entry.timestamp %}
           <div class="entry-date">
-            {{ entry.timestamp }}
+            {% if entry.id %}
+              <a href="{{ url_for('view_entry', guestbook_host=entry.host, entry_id=entry.id) }}">{{ entry.timestamp }}</a>
+            {% else %}
+              {{ entry.timestamp }}
+            {% endif %}
           </div>
         {% endif %}
       </div>
