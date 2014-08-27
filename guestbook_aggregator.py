@@ -1,3 +1,30 @@
+"""
+Guestbook Aggregator
+
+Shows entries from all guestbooks using their APIs. Either set
+the ENV variable GUESTBOOK_API_URLS or create a settings_local.py
+to set the list of guestbooks.
+
+API Endpoints this project accesses and expects:
+- GET  /entries     -> {'entries': [<entry>]}
+- POST /entries     -> {}
+    - Payload
+        - name : string
+        - email : email
+        - message : string
+- GET  /entry/:id   -> <entry>
+
+Objects
+- <entry>
+    - id : string
+    - timestamp : datetime string
+    - name : string
+    - email : email
+    - photo : url
+    - message : string
+"""
+
+
 from __future__ import print_function
 
 from urlparse import urljoin
