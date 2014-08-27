@@ -9,4 +9,5 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # 3rd-party settings
-GUESTBOOK_API_URLS = os.environ.get('GUESTBOOK_API_URLS', '')
+GUESTBOOK_API_URLS = os.environ.get('GUESTBOOK_API_URLS',
+    'http://localhost:5000/')
