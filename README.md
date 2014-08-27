@@ -1,5 +1,5 @@
-Guestbook Client
-================
+Guestbook Aggregator
+====================
 
 This project is part of the the [REST API Extravaganza meetup][meetup] from [@pghpy][].
 

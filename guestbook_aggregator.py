@@ -5,7 +5,7 @@ import hashlib
 from urlparse import urljoin
 from dateutil import parser
 import requests
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 
 # Flask application
