@@ -2,28 +2,34 @@ body {
   color: #333;
 }
 
-
 h1 {
-  font-size: 52px;
   margin: 0;
 }
 
-.header {
-  margin: 42px 0;
+header {
+  margin: 24px 0;
+}
+
+.entry img {
+  float: left;
+  max-width: 128px;
+  max-height: 128px;
+  margin-right: 24px;
+}
+
+.entry p {
+  font-size: 24px;
+}
+.entry p.large {
+  font-size: 36px;
 }
 
 .entry-photo {
   float: left;
 }
 
-.entry-message {
-  float: left;
-  margin-left: 12px;
-  font-size: 42px;
-}
-
 .entry-date {
-  float: right;
   font-size: 18px;
   color: #888;
+  margin-top: 16px;
 }

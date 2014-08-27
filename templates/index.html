@@ -3,22 +3,30 @@
 
 {% block page %}
   <div class="container">
-    <div class="header clearfix">
+    <header class="clearfix">
       <h1 class="pull-left">Aggregated Entries</h1>
-      <a href="#TODO" class="btn btn-lg btn-success pull-right">New Entry</a>
-    </div>
+      <a href="{{ url_for('new_entry') }}" class="btn btn-success pull-right">New Entry</a>
+    </header>
+
+    {% if error %}
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+    {% endif %}
 
     {% for entry in entries %}
       <div class="well clearfix">
-        <div class="entry-photo">
-          <img src="{{ entry.photo }}" />
+        <div class="entry clearfix">
+          <img src="{{ entry.photo }}" width="128" height="128" title="{{ entry.name }}" />
+          <p class="{{ 'large' if entry.message|count < 30 }}">
+            {{ entry.message }}
+          </p>
         </div>
-        <div class="entry-message">
-          {{ entry.message }}
-        </div>
-        <div class="entry-date">
-          {{ entry.timestamp.strftime('%b %d %Y %I:%M%p') }}
-        </div>
+        {% if entry.timestamp %}
+          <div class="entry-date">
+            {{ entry.timestamp }}
+          </div>
+        {% endif %}
       </div>
     {% endfor %}
   </div>
