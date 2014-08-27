@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Guestbook Client{% endblock %}</title>
+  {% block style_overrides %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  {% endblock %}
+  {% block styles %}{% endblock %}
+  <!--[if lt IE 9]><script src="{{ url_for('static', filename='vendor/html5shiv/html5shiv.js') }}"></script><![endif]-->
+</head>
+<body>
+  <div class="page">
+    {% block page %}{% endblock %}
+  </div>
+  {% block dialogs %}{% endblock %}
+  {% block script_overrides %}
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+  {% endblock %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Environment files
+env
+*.so
+*.py[cod]
+settings_local.py
+
+# OS-specific files
+.DS_Store
+Desktop.ini
+Thumbs.db

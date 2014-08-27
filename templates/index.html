@@ -1,0 +1,25 @@
+{% extends '_base.html' %}
+
+
+{% block page %}
+  <div class="container">
+    <div class="header clearfix">
+      <h1 class="pull-left">Aggregated Entries</h1>
+      <a href="#TODO" class="btn btn-lg btn-success pull-right">New Entry</a>
+    </div>
+
+    {% for entry in entries %}
+      <div class="well clearfix">
+        <div class="entry-photo">
+          <img src="{{ entry.photo }}" />
+        </div>
+        <div class="entry-message">
+          {{ entry.message }}
+        </div>
+        <div class="entry-date">
+          {{ entry.timestamp.strftime('%b %d %Y %I:%M%p') }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
