@@ -1,3 +1,11 @@
+"""
+Default settings
+
+Note: This file is under version control. Instead of changing settings
+here, create a new settings_local.py file and add your variables there.
+"""
+
+
 import os
 
 
